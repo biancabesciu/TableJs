@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manipulate table with Js</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Pet</th>
+                <th>Name</th>
+                <th>Color</th>
+                <th>Gender</th>
+            </tr>
+        </thead>
+
+
+        <tbody id="tableBody">
+
+        </tbody>
+    </table>
+
+    <div class="addData">
+        <label for="pet">Pet:
+            <input type="text" name="pet" id="pet" value="Giraffe">
+        </label>
+        <br>
+        <label for="name">Name:
+            <input type="text" name="name" id="name" value="Pi">
+        </label>
+        <br>
+        <label for="color">Color:
+            <input type="text" name="color" id="color" value="Blue">
+        </label>
+        <br>
+        <label for="gender">Gender:
+            <input type="text" name="gender" id="gender" value="male">
+        </label>
+        <br>
+    </div>
+
+    <div class="buttons">
+        <input type="button" value="Add row" onclick="addRow()">
+        <input type="button" value="Delete row" onclick="removeRow()">
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>

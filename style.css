@@ -1,0 +1,67 @@
+body {
+    background-color: #a7cbd5;
+}
+
+table {
+    border: 1px solid grey;
+    width: 50%;
+    height: 200px;
+    margin: 0 auto;
+}
+
+thead {
+    background-color: #362c36;
+    color: white;
+}
+
+.addData {
+    position: relative;
+    left: 37%;
+    margin: 20px;
+}
+
+.addData label {
+    margin: 20px;
+}
+
+.addData label input {
+    margin: 3px 0 3px 0;
+    border-radius: 5px;
+}
+
+input#pet {
+    position: relative;
+    left: 29px;
+}
+
+input#name {
+    position: relative;
+    left: 11px;
+}
+
+input#color {
+    position: relative;
+    left: 13px;
+}
+
+input#gender {
+    position: relative;
+    left: 2px;
+}
+
+.buttons {
+    position: relative;;
+    margin-top: 20px;
+    left: 44%;
+}
+
+.buttons input {
+    background-color: #362c36;
+    color: white;
+    width: 72px;
+    height: 33px;
+    border-radius: 8px;
+}
+
+
+
