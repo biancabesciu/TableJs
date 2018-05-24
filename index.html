@@ -28,7 +28,7 @@
         </label>
         <br>
         <label for="name">Name:
-            <input type="text" name="name" id="name" value="Pi">
+                <input type="text" name="name" id="name" value="Pi">
         </label>
         <br>
         <label for="color">Color:
@@ -44,8 +44,10 @@
     <div class="buttons">
         <input type="button" value="Add row" onclick="addRow()">
         <input type="button" value="Delete row" onclick="removeRow()">
+        <input type="button" value="Sort by name" id="sort" onclick="sortByName()">
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="main.js"></script>
 </body>
 </html>

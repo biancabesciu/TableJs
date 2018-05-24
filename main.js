@@ -1,4 +1,4 @@
-const tableArray = [
+let tableArray = [
     {
         pet: 'Cat',
         name: 'Millie',
@@ -47,7 +47,7 @@ const tableArray = [
 ];
 
 function init () {
-    for(i = 0; i < tableArray.length; i++) {
+    for(let i = 0; i < tableArray.length; i++) {
 
         let backgroundColor;
         let pet = tableArray[i].pet;
@@ -55,11 +55,11 @@ function init () {
         if(pet === 'Cat') {
             backgroundColor = "aliceBlue";
         } else if (pet === 'Giraffe') {
-            backgroundColor = "#4d4c59"
+            backgroundColor = "#4d4c59";
         } else if (pet === 'Dog'){
             backgroundColor = "#71777d";
         } else if (pet === 'Horse') {
-            backgroundColor = "#f7f6f0"
+            backgroundColor = "#f7f6f0";
         }
 
         let table =
@@ -70,27 +70,25 @@ function init () {
             '<td class="gender">' + tableArray[i].gender + '</td>' +
             '</tr>';
 
+        let tds = document.getElementsByTagName('td');
+        for(let i = 0; i < tds.length; i++) {
+            tds[i].contentEditable = 'true';
+        }
+
         document.getElementById('tableBody').insertAdjacentHTML("beforeend", table);
     }
-    console.log('DOMContentLoaded');
 }
+document.addEventListener('DOMContentLoaded', init);
 
 function addRow() {
     let table = document.getElementById('tableBody');
+    let tr = document.getElementsByTagName('tr');
+    let td = document.getElementsByTagName('td');
 
     let pet = document.getElementById('pet').value;
     let name = document.getElementById('name').value;
     let color = document.getElementById('color').value;
     let gender = document.getElementById('gender').value;
-
-    const newObj = {
-        pet: pet,
-        name: name,
-        color: color,
-        gender: gender
-    };
-
-    tableArray.push(newObj);
 
     let newRow = table.insertRow(0);
 
@@ -104,20 +102,6 @@ function addRow() {
     cel3.innerHTML = color;
     cel4.innerHTML = gender;
 
-    console.log(tableArray);
-
-}
-
-function removeRow() {
-    let table = document.getElementById('tableBody');
-
-    let pet = document.getElementById('pet').value;
-    let name = document.getElementById('name').value;
-    let color = document.getElementById('color').value;
-    let gender = document.getElementById('gender').value;
-
-    table.deleteRow(0);
-
     const newObj = {
         pet: pet,
         name: name,
@@ -125,8 +109,31 @@ function removeRow() {
         gender: gender
     };
 
-    tableArray.remove(newObj);
+    tableArray.push(newObj);
+    console.log(tableArray);
+}
+
+function removeRow() {
+    let table = document.getElementById('tableBody');
+
+    table.deleteRow(0);
+
+    tableArray.pop();
  }
 
+function sortByName () {
+    tableArray.sort(function (a, b) {
+        const nameA = a.name.toUpperCase();
+        const nameB = b.name.toUpperCase();
 
-document.addEventListener('DOMContentLoaded', init);
+        if (nameA > nameB) {
+            return 1;
+        } else if (nameA < nameB) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+}
+console.log(tableArray.sort(sortByName()));
+
