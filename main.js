@@ -60,6 +60,16 @@ function insertRow(rowObj) {
     cel2.innerHTML = rowObj.name;
     cel3.innerHTML = rowObj.color;
     cel4.innerHTML = rowObj.gender;
+
+    if(rowObj.gender === 'female') {
+        cel4.style.backgroundColor = "#d5a5b1";
+    } else {
+        cel4.style.backgroundColor = "#7670ab"
+    }
+
+    if(rowObj) {
+        sortByGender(tableArray)
+    }
 }
 
 function addRowButton() {
@@ -88,28 +98,28 @@ function removeRow() {
     tableArray.pop();
 }
 
+function sortByGender (rowObj) {
+    rowObj.sort(function (a, b) {
+        const genderF = a.gender.toUpperCase();
+        const genderM = b.gender.toUpperCase();
+
+        if (genderF > genderM) {
+            return 1;
+        } else if (genderF < genderM) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+}
+
 function init () {
     for(let i = 0; i < tableArray.length; i++) {
         insertRow(tableArray[i]);
     }
 }
 document.addEventListener('DOMContentLoaded', init);
+
 console.log(tableArray);
 
-
-// function sortByName () {
-//     tableArray.sort(function (a, b) {
-//         const nameA = a.name.toUpperCase();
-//         const nameB = b.name.toUpperCase();
-//
-//         if (nameA > nameB) {
-//             return 1;
-//         } else if (nameA < nameB) {
-//             return -1;
-//         } else {
-//             return 0;
-//         }
-//     });
-// }
-// console.log(tableArray.sort(sortByName()));
 
