@@ -19,6 +19,10 @@ thead a {
     text-decoration: none;
 }
 
+tbody {
+    background-color: white;
+}
+
 .addData {
     position: relative;
     left: 37%;
