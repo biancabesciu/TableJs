@@ -49,7 +49,7 @@ let tableArray = [
 function insertRow(rowObj) {
     let table = document.getElementById('tableBody');
 
-    let newRow = table.insertRow(0);
+    let newRow = table.insertRow();
 
     let cel1 = newRow.insertCell(0);
     let cel2 = newRow.insertCell(1);
@@ -65,10 +65,6 @@ function insertRow(rowObj) {
         cel4.style.backgroundColor = "#d5a5b1";
     } else {
         cel4.style.backgroundColor = "#7670ab"
-    }
-
-    if(rowObj) {
-        sortByGender(tableArray)
     }
 }
 
@@ -98,19 +94,12 @@ function removeRow() {
     tableArray.pop();
 }
 
-function sortByGender (rowObj) {
-    rowObj.sort(function (a, b) {
-        const genderF = a.gender.toUpperCase();
-        const genderM = b.gender.toUpperCase();
+function emptyTable() {
+    let table= document.getElementById('tableBody');
 
-        if (genderF > genderM) {
-            return 1;
-        } else if (genderF < genderM) {
-            return -1;
-        } else {
-            return 0;
-        }
-    });
+    for (let i = 0; i < tableArray.length; i++) {
+        table.deleteRow(tableArray[i]);
+    }
 }
 
 function init () {
@@ -122,4 +111,47 @@ document.addEventListener('DOMContentLoaded', init);
 
 console.log(tableArray);
 
+let th = document.getElementById('sortBtns');
+let btn1 = document.createElement('input');
+btn1.type = "button";
+btn1.value = "UP";
+let btn2 = document.createElement('input');
+btn2.type = "button";
+btn2.value = "DOWN";
+th.appendChild(btn1);
+th.appendChild(btn2);
 
+btn1.addEventListener('click',  function sortByGenderUp () {
+    tableArray.sort(function (a, b) {
+         const genderA = a.gender.toUpperCase();
+         const genderB = b.gender.toUpperCase();
+
+         if (genderA > genderB) {
+             return 1;
+         } else if (genderB < genderA) {
+             return -1;
+         } else {
+             return 0;
+         }
+    });
+    emptyTable();
+    init();
+});
+
+
+btn2.addEventListener('click',  function sortByGenderDown () {
+     tableArray.sort(function (a, b) {
+         const genderA = a.gender.toUpperCase();
+         const genderB = b.gender.toUpperCase();
+
+         if (genderB > genderA) {
+             return 1;
+         } else if (genderA < genderB) {
+             return -1;
+         }  else {
+             return 0;
+         }
+     });
+     emptyTable();
+     init();
+});
