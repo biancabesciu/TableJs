@@ -111,47 +111,50 @@ document.addEventListener('DOMContentLoaded', init);
 
 console.log(tableArray);
 
-let th = document.getElementById('sortBtns');
-let btn1 = document.createElement('input');
-btn1.type = "button";
-btn1.value = "UP";
-let btn2 = document.createElement('input');
-btn2.type = "button";
-btn2.value = "DOWN";
-th.appendChild(btn1);
-th.appendChild(btn2);
+let buttons = document.getElementsByTagName('table')[0].getElementsByTagName('input');
 
-btn1.addEventListener('click',  function sortByGenderUp () {
-    tableArray.sort(function (a, b) {
-         const genderA = a.gender.toUpperCase();
-         const genderB = b.gender.toUpperCase();
-
-         if (genderA > genderB) {
-             return 1;
-         } else if (genderB < genderA) {
-             return -1;
-         } else {
-             return 0;
-         }
+for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function () {
+        tableArray.sort(propSort(buttons[i].name, buttons[i].value));
+        emptyTable();
+        init();
     });
-    emptyTable();
-    init();
-});
+}
 
+function propSort(column, direction) {
+    return function(a, b) {
+        const A = a[column].toUpperCase();
+        const B = b[column].toUpperCase();
+        let coefficient = 1,
+            result = 0;
 
-btn2.addEventListener('click',  function sortByGenderDown () {
-     tableArray.sort(function (a, b) {
-         const genderA = a.gender.toUpperCase();
-         const genderB = b.gender.toUpperCase();
+        if (direction.toLowerCase() === 'down') {
+            coefficient = -1;
+        }
 
-         if (genderB > genderA) {
-             return 1;
-         } else if (genderA < genderB) {
-             return -1;
-         }  else {
-             return 0;
-         }
-     });
-     emptyTable();
-     init();
-});
+        if (A > B) {
+            result = 1;
+        } else if (A < B) {
+            result = -1;
+        }
+        return coefficient * result;
+    }
+}
+
+// if(buttons.value = 'Down') {
+//     buttons.name = 'sortPet';
+//     tableArray.sort(function (a, b) {
+//         const A = a.pet.toUpperCase();
+//         const B = b.pet.toUpperCase();
+//
+//         if (B > A) {
+//             return 1;
+//         } else if (A < B) {
+//             return -1;
+//         } else {
+//             return 0;
+//         }
+//     });
+//     emptyTable();
+//     init();
+// }
