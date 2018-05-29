@@ -9,18 +9,17 @@ table {
     margin: 0 auto;
 }
 
+table #tableBody tr:nth-of-type(odd) {
+    background-color: white;
+}
+
+table #tableBody tr:nth-of-type(even) {
+    background-color: #f0f0f0;
+}
+
 thead {
     background-color: #362c36;
     color: white;
-}
-
-thead a {
-    color: white;
-    text-decoration: none;
-}
-
-tbody {
-    background-color: white;
 }
 
 .addData {

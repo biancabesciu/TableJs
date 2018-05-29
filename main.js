@@ -61,11 +61,11 @@ function insertRow(rowObj) {
     cel3.innerHTML = rowObj.color;
     cel4.innerHTML = rowObj.gender;
 
-    if(rowObj.gender === 'female') {
-        cel4.style.backgroundColor = "#d5a5b1";
-    } else {
-        cel4.style.backgroundColor = "#7670ab"
-    }
+    // if(rowObj.gender === 'female') {
+    //     cel4.style.backgroundColor = "#d5a5b1";
+    // } else {
+    //     cel4.style.backgroundColor = "#7670ab"
+    // }
 }
 
 function addRowButton() {
@@ -141,20 +141,3 @@ function propSort(column, direction) {
     }
 }
 
-// if(buttons.value = 'Down') {
-//     buttons.name = 'sortPet';
-//     tableArray.sort(function (a, b) {
-//         const A = a.pet.toUpperCase();
-//         const B = b.pet.toUpperCase();
-//
-//         if (B > A) {
-//             return 1;
-//         } else if (A < B) {
-//             return -1;
-//         } else {
-//             return 0;
-//         }
-//     });
-//     emptyTable();
-//     init();
-// }
