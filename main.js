@@ -48,7 +48,6 @@ let tableArray = [
 
 function insertRow(rowObj) {
     let table = document.getElementById('tableBody');
-
     let newRow = table.insertRow();
 
     let cel1 = newRow.insertCell(0);
@@ -66,6 +65,7 @@ function insertRow(rowObj) {
     // } else {
     //     cel4.style.backgroundColor = "#7670ab"
     // }
+    alternateRowColor();
 }
 
 function addRowButton() {
@@ -141,3 +141,14 @@ function propSort(column, direction) {
     }
 }
 
+function alternateRowColor() {
+    let table = document.getElementById('tableBody');
+    let rows = table.getElementsByTagName("tr");
+    for (let i = 0; i < rows.length; i++) {
+        if (i % 2 === 0) {
+            rows[i].className = "even";
+        } else {
+            rows[i].className = "odd";
+        }
+    }
+}

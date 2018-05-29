@@ -9,11 +9,19 @@ table {
     margin: 0 auto;
 }
 
-table #tableBody tr:nth-of-type(odd) {
-    background-color: white;
+/*table #tableBody tr:nth-of-type(odd) {*/
+    /*background-color: white;*/
+/*}*/
+
+/*table #tableBody tr:nth-of-type(even) {*/
+    /*background-color: #f0f0f0;*/
+/*}*/
+
+.odd {
+    background-color: #ffff;
 }
 
-table #tableBody tr:nth-of-type(even) {
+.even {
     background-color: #f0f0f0;
 }
 
