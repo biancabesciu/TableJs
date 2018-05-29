@@ -60,14 +60,20 @@ function insertRow(rowObj) {
     cel3.innerHTML = rowObj.color;
     cel4.innerHTML = rowObj.gender;
 
-    // if(rowObj.gender === 'female') {
-    //     cel4.style.backgroundColor = "#d5a5b1";
-    // } else {
-    //     cel4.style.backgroundColor = "#7670ab"
-    // }
-    alternateRowColor();
+    alternateRowColor(table.children);
+    createDeleteButton();
 }
 
+//alter table row background color
+function alternateRowColor(trArray) {
+    if(trArray.length % 2) {
+        trArray[trArray.length - 1].className = 'odd';
+    } else {
+        trArray[trArray.length - 1].className = 'even';
+    }
+}
+
+//adding rows according to the input fields
 function addRowButton() {
     let pet = document.getElementById('pet').value;
     let name = document.getElementById('name').value;
@@ -86,14 +92,18 @@ function addRowButton() {
 
 }
 
-function removeRow() {
-    let table = document.getElementById('tableBody');
+//remove row
+// function removeRow() {
+//     let table = document.getElementById('tableBody');
+//
+//     for (let i = 0; i < tableArray.length; i++) {
+//         table.deleteRow(0);
+//
+//         tableArray.pop();
+//     }
+// }
 
-    table.deleteRow(0);
-
-    tableArray.pop();
-}
-
+//empty table
 function emptyTable() {
     let table= document.getElementById('tableBody');
 
@@ -102,6 +112,7 @@ function emptyTable() {
     }
 }
 
+//initialize table when load window
 function init () {
     for(let i = 0; i < tableArray.length; i++) {
         insertRow(tableArray[i]);
@@ -111,6 +122,8 @@ document.addEventListener('DOMContentLoaded', init);
 
 console.log(tableArray);
 
+//add event listener to every button
+//sort array by property object
 let buttons = document.getElementsByTagName('table')[0].getElementsByTagName('input');
 
 for (let i = 0; i < buttons.length; i++) {
@@ -121,6 +134,7 @@ for (let i = 0; i < buttons.length; i++) {
     });
 }
 
+//sort function by ascending and descending
 function propSort(column, direction) {
     return function(a, b) {
         const A = a[column].toUpperCase();
@@ -141,14 +155,27 @@ function propSort(column, direction) {
     }
 }
 
-function alternateRowColor() {
+function createDeleteButton () {
     let table = document.getElementById('tableBody');
-    let rows = table.getElementsByTagName("tr");
-    for (let i = 0; i < rows.length; i++) {
-        if (i % 2 === 0) {
-            rows[i].className = "even";
-        } else {
-            rows[i].className = "odd";
-        }
+    let tr = table.getElementsByTagName('tr');
+    let td = document.createElement('td');
+    let btnDelete = document.createElement('input');
+    btnDelete.type = 'button';
+    btnDelete.value = "Delete";
+    for (let i = 0; i < tr.length; i++) {
+        tr[i].appendChild(td);
+        td.appendChild(btnDelete);
     }
+
+    // for(let i = 0; i < btnDelete.length; i++ ) {
+    //     btnDelete[i].addEventListener('click', function() {
+    //
+    //     } )
+    // }
 }
+
+
+
+
+
+
