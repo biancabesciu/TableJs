@@ -61,7 +61,7 @@ function insertRow(rowObj) {
     cel4.innerHTML = rowObj.gender;
 
     alternateRowColor(table.children);
-    createDeleteButton(table.children);
+    removeRow(table.children);
 }
 
 //alter table row background color
@@ -73,15 +73,17 @@ function alternateRowColor(trArray) {
     }
 }
 
-//append delete button to every cell
-function createDeleteButton (tdArray) {
+//append delete button to every last cell
+//remove row when button is clicked
+function removeRow (tdArray) {
     let btnDelete = document.createElement('input');
     btnDelete.type = 'button';
     btnDelete.value = "Delete";
+    btnDelete.onclick = (function () {
+        document.getElementById('tableBody').deleteRow(0);
+    });
 
-    if(tdArray.length) {
-        tdArray[tdArray.length - 1].appendChild(btnDelete);
-    }
+    tdArray[tdArray.length - 1].appendChild(btnDelete);
 }
 
 //adding rows according to the input fields
@@ -103,17 +105,6 @@ function addRowButton() {
 
 }
 
-//remove row
-function removeRow() {
-     let table = document.getElementById('tableBody');
-
-     for (let i = 0; i < tableArray.length; i++) {
-         table.deleteRow(0);
-
-         tableArray.pop();
-     }
-}
-
 //empty table
 function emptyTable() {
     let table= document.getElementById('tableBody');
@@ -133,7 +124,7 @@ document.addEventListener('DOMContentLoaded', init);
 
 console.log(tableArray);
 
-//add event listener to every button
+//add event listener to header buttons
 //sort array by property object
 let buttons = document.getElementsByTagName('table')[0].getElementsByTagName('input');
 
