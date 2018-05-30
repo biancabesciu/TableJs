@@ -61,7 +61,7 @@ function insertRow(rowObj) {
     cel4.innerHTML = rowObj.gender;
 
     alternateRowColor(table.children);
-    createDeleteButton();
+    createDeleteButton(table.children);
 }
 
 //alter table row background color
@@ -70,6 +70,17 @@ function alternateRowColor(trArray) {
         trArray[trArray.length - 1].className = 'odd';
     } else {
         trArray[trArray.length - 1].className = 'even';
+    }
+}
+
+//append delete button to every cell
+function createDeleteButton (tdArray) {
+    let btnDelete = document.createElement('input');
+    btnDelete.type = 'button';
+    btnDelete.value = "Delete";
+
+    if(tdArray.length) {
+        tdArray[tdArray.length - 1].appendChild(btnDelete);
     }
 }
 
@@ -93,15 +104,15 @@ function addRowButton() {
 }
 
 //remove row
-// function removeRow() {
-//     let table = document.getElementById('tableBody');
-//
-//     for (let i = 0; i < tableArray.length; i++) {
-//         table.deleteRow(0);
-//
-//         tableArray.pop();
-//     }
-// }
+function removeRow() {
+     let table = document.getElementById('tableBody');
+
+     for (let i = 0; i < tableArray.length; i++) {
+         table.deleteRow(0);
+
+         tableArray.pop();
+     }
+}
 
 //empty table
 function emptyTable() {
@@ -155,24 +166,7 @@ function propSort(column, direction) {
     }
 }
 
-function createDeleteButton () {
-    let table = document.getElementById('tableBody');
-    let tr = table.getElementsByTagName('tr');
-    let td = document.createElement('td');
-    let btnDelete = document.createElement('input');
-    btnDelete.type = 'button';
-    btnDelete.value = "Delete";
-    for (let i = 0; i < tr.length; i++) {
-        tr[i].appendChild(td);
-        td.appendChild(btnDelete);
-    }
 
-    // for(let i = 0; i < btnDelete.length; i++ ) {
-    //     btnDelete[i].addEventListener('click', function() {
-    //
-    //     } )
-    // }
-}
 
 
 
