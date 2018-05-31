@@ -4,40 +4,31 @@ let tableArray = [
         name: 'Millie',
         color: 'White',
         gender: 'female'
-
     },
-
     {
         pet: 'Dog',
         name: 'Bruno',
         color: 'Brown',
         gender: 'male'
-
     },
-
     {
         pet: 'Giraffe',
         name: 'Tillie',
         color: 'Yellow',
         gender: 'female'
-
     },
-
     {
         pet: 'Horse',
         name: 'Frufru',
         color: 'Black',
         gender: 'female'
-
     },
-
     {
         pet: 'Dog',
         name: 'Lena',
         color: 'Grey',
         gender: 'female'
     },
-
     {
         pet: 'Cat',
         name: 'Milo',
@@ -86,14 +77,14 @@ function removeRow (trArray) {
     trArray[trArray.length - 1].appendChild(td);
 
     btnDelete.onclick = function (e) {
+        //remove object from array according to index
+        let index = e.target.parentNode.parentNode.rowIndex;
+        if(index !== -1) {
+            tableArray.splice(index - 1, 1);
+        }
+
         //remove row in which the button was clicked
         table.removeChild(e.target.parentNode.parentNode);
-
-        //remove object from array according to index
-        let index = table.children[1].rowIndex;
-        if (index !== -1) {
-            tableArray.splice(index, 1);
-        }
     };
 }
 
