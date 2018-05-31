@@ -35,28 +35,31 @@
         </tbody>
     </table>
 
-    <div class="addData">
-        <label for="pet">Pet:
-            <input type="text" name="pet" id="pet" value="Giraffe">
-        </label>
-        <br>
-        <label for="name">Name:
+    <div class="container">
+        <div class="addData">
+            <label for="pet">Pet:
+                <input type="text" name="pet" id="pet" value="Giraffe">
+            </label>
+            <br>
+            <label for="name">Name:
                 <input type="text" name="name" id="name" value="Pi">
-        </label>
-        <br>
-        <label for="color">Color:
-            <input type="text" name="color" id="color" value="Blue">
-        </label>
-        <br>
-        <label for="gender">Gender:
-            <input type="text" name="gender" id="gender" value="male">
-        </label>
-        <br>
+            </label>
+            <br>
+            <label for="color">Color:
+                <input type="text" name="color" id="color" value="Blue">
+            </label>
+            <br>
+            <label for="gender">Gender:
+                <input type="text" name="gender" id="gender" value="male">
+            </label>
+            <br>
+        </div>
+
+        <div class="buttons">
+            <input type="button" value="Add row" onclick="addRowButton()">
+        </div>
     </div>
 
-    <div class="buttons">
-        <input type="button" value="Add row" onclick="addRowButton()">
-    </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
     <script src="main.js"></script>

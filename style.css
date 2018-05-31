@@ -5,7 +5,6 @@ body {
 table {
     border: 1px solid grey;
     width: 50%;
-    height: 200px;
     margin: 0 auto;
 }
 
@@ -16,6 +15,10 @@ table {
 /*table #tableBody tr:nth-of-type(even) {*/
     /*background-color: #f0f0f0;*/
 /*}*/
+
+tr {
+    line-height: 30px;
+}
 
 .odd {
     background-color: #ffff;
@@ -30,10 +33,14 @@ thead {
     color: white;
 }
 
+.container {
+    position: absolute;
+}
+
 .addData {
     position: relative;
-    left: 37%;
-    margin: 20px;
+    left: 151%;
+    margin-top: 30px;
 }
 
 .addData label {
@@ -65,10 +72,14 @@ input#gender {
     left: 2px;
 }
 
+input {
+    line-height: 10px;
+}
+
 .buttons {
     position: relative;;
-    margin-top: 20px;
-    left: 42%;
+    right: -282%;
+    bottom: 64px;
 }
 
 .buttons input {
@@ -79,5 +90,7 @@ input#gender {
     border-radius: 8px;
 }
 
-
+td .btnDelete {
+    float: right;
+}
 
