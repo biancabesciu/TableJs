@@ -75,15 +75,26 @@ function alternateRowColor(trArray) {
 
 //append delete button to every last cell
 //remove row when button is clicked
-function removeRow (tdArray) {
+function removeRow (trArray) {
+    let table = document.getElementById('tableBody');
     let btnDelete = document.createElement('input');
+    let td = document.createElement('td');
     btnDelete.type = 'button';
     btnDelete.value = "Delete";
-    btnDelete.onclick = (function () {
-        document.getElementById('tableBody').deleteRow(0);
-    });
+    td.appendChild(btnDelete);
 
-    tdArray[tdArray.length - 1].appendChild(btnDelete);
+    trArray[trArray.length - 1].appendChild(td);
+
+    btnDelete.onclick = function (e) {
+        //remove row in which the button was clicked
+        table.removeChild(e.target.parentNode.parentNode);
+
+        //remove object from array according to index
+        let index = table.children[1].rowIndex;
+        if (index !== -1) {
+            tableArray.splice(index, 1);
+        }
+    };
 }
 
 //adding rows according to the input fields
@@ -120,7 +131,9 @@ function init () {
         insertRow(tableArray[i]);
     }
 }
+
 document.addEventListener('DOMContentLoaded', init);
+
 
 console.log(tableArray);
 
@@ -156,8 +169,6 @@ function propSort(column, direction) {
         return coefficient * result;
     }
 }
-
-
 
 
 
