@@ -53,6 +53,7 @@ function insertRow(rowObj) {
 
     alternateRowColor(table.children);
     removeRow(table.children);
+    editRow(table.children);
 }
 
 //alter table row background color
@@ -63,6 +64,41 @@ function alternateRowColor(trArray) {
         trArray[trArray.length - 1].className = 'even';
     }
 }
+
+function editRow(trIndex) {
+    document.getElementById("tableBody").ondblclick = function(e) {
+        let tr = e.target.parentNode;
+        let td = tr.childNodes;
+        trIndex = tr.rowIndex;
+
+        // make the row td's  editable
+        for( let i = 0; i < td.length; i++){
+            td[i].contentEditable = "true";
+        }
+    };
+}
+console.log(editRow());
+
+
+
+
+// function arrayMoveRow(arr, fromIndex, toIndex) {
+//       while (fromIndex < 0) {
+//           fromIndex += arr.length;
+//       }
+//       while (toIndex < 0) {
+//           toIndex += arr.length;
+//       }
+//       if (toIndex >= arr.length) {
+//           let k = toIndex - arr.length;
+//           while ((k--) + 1) {
+//               arr.push(undefined);
+//           }
+//       }
+//       arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
+//       return arr;
+// }
+
 
 //append delete button to every last cell
 //remove row when button is clicked
