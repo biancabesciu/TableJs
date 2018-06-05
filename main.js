@@ -36,6 +36,12 @@ let tableArray = [
         gender: 'male'
     }
 ];
+columnIndex = [
+    "pet",
+    "name",
+    "color",
+    "gender"
+];
 
 function insertRow(rowObj) {
     let table = document.getElementById('tableBody');
@@ -53,7 +59,6 @@ function insertRow(rowObj) {
 
     alternateRowColor(table.children);
     removeRow(table.children);
-    editRow(table.children);
 }
 
 //alter table row background color
@@ -65,21 +70,29 @@ function alternateRowColor(trArray) {
     }
 }
 
-function editRow(trIndex) {
-    document.getElementById("tableBody").ondblclick = function(e) {
-        let tr = e.target.parentNode;
-        let td = tr.childNodes;
-        trIndex = tr.rowIndex;
+document.getElementById('tableBody').addEventListener('dblclick', function(dblClickEvent) {
+    let td = dblClickEvent.target;
+    td.contentEditable = "true";
+    td.focus();
 
-        // make the row td's  editable
-        for( let i = 0; i < td.length; i++){
-            td[i].contentEditable = "true";
-        }
-    };
+    dblClickEvent.target.addEventListener('blur', updateCellValue);
+});
+
+function updateCellValue(blurEvent) {
+    let td = blurEvent.target;
+    let newValue = td.textContent;
+    td.innerHtml = newValue;
+
+    //get row and cell index
+    let rowIndex = blurEvent.target.parentNode.rowIndex - 1;
+    let cellIndex = blurEvent.target.cellIndex;
+    let columnProperty = columnIndex[cellIndex];
+
+    tableArray[rowIndex][columnProperty] = newValue;
+
+    td.contentEditable = "false";
+    td.removeEventListener('blur', updateCellValue);
 }
-console.log(editRow());
-
-
 
 
 // function arrayMoveRow(arr, fromIndex, toIndex) {
@@ -145,24 +158,22 @@ function addRowButton() {
 
 //empty table
 function emptyTable() {
-    let table= document.getElementById('tableBody');
+    let table = document.getElementById('tableBody');
 
     for (let i = 0; i < tableArray.length; i++) {
         table.deleteRow(tableArray[i]);
     }
 }
 
-//initialize table when load window
-function init () {
+//recreate table using tableArray data
+function createTable () {
     for(let i = 0; i < tableArray.length; i++) {
         insertRow(tableArray[i]);
     }
 }
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', createTable);
 
-
-console.log(tableArray);
 
 //add event listener to header buttons
 //sort array by property object
@@ -172,7 +183,7 @@ for (let i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener('click', function () {
         tableArray.sort(propSort(buttons[i].name, buttons[i].value));
         emptyTable();
-        init();
+        createTable();
     });
 }
 
