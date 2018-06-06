@@ -36,6 +36,7 @@ let tableArray = [
         gender: 'male'
     }
 ];
+
 columnIndex = [
     "pet",
     "name",
@@ -70,30 +71,32 @@ function alternateRowColor(trArray) {
     }
 }
 
-document.getElementById('tableBody').addEventListener('dblclick', function(dblClickEvent) {
-    let td = dblClickEvent.target;
-    td.contentEditable = "true";
+//add event listener when dblclick in a cell
+document.getElementById('tableBody').addEventListener('dblclick', function(eventDblclick) {
+    let td = eventDblclick.target;
+    td.contentEditable = 'true';
     td.focus();
 
-    dblClickEvent.target.addEventListener('blur', updateCellValue);
+    td.addEventListener('blur', updateCellValue);
 });
 
-function updateCellValue(blurEvent) {
-    let td = blurEvent.target;
+//update cell with the new value
+function updateCellValue (eventBlur) {
+    let td = eventBlur.target;
     let newValue = td.textContent;
-    td.innerHtml = newValue;
+    td.innerHTML = newValue;
 
     //get row and cell index
-    let rowIndex = blurEvent.target.parentNode.rowIndex - 1;
-    let cellIndex = blurEvent.target.cellIndex;
-    let columnProperty = columnIndex[cellIndex];
+    let rowIndex = td.parentNode.rowIndex - 1;
+    let cellIndex = td.cellIndex;
+    let columnName = columnIndex[cellIndex];
 
-    tableArray[rowIndex][columnProperty] = newValue;
+    tableArray[rowIndex][columnName] = newValue;
+    
+    td.contentEditable = 'false';
 
-    td.contentEditable = "false";
     td.removeEventListener('blur', updateCellValue);
 }
-
 
 // function arrayMoveRow(arr, fromIndex, toIndex) {
 //       while (fromIndex < 0) {
