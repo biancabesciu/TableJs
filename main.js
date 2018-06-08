@@ -37,15 +37,17 @@ let tableArray = [
     }
 ];
 
-columnIndex = [
+let columnIndex = [
     "pet",
     "name",
     "color",
     "gender"
 ];
 
+let trDragged;
+let table = document.getElementById('tableBody');
+
 function insertRow(rowObj) {
-    let table = document.getElementById('tableBody');
     let newRow = table.insertRow();
 
     let cel1 = newRow.insertCell(0);
@@ -57,6 +59,10 @@ function insertRow(rowObj) {
     cel2.innerHTML = rowObj.name;
     cel3.innerHTML = rowObj.color;
     cel4.innerHTML = rowObj.gender;
+
+    //make row draggable
+    //give it a class of dropzone
+    newRow.draggable = "true";
 
     alternateRowColor(table.children);
     removeRow(table.children);
@@ -72,7 +78,7 @@ function alternateRowColor(trArray) {
 }
 
 //add event listener when dblclick in a cell
-document.getElementById('tableBody').addEventListener('dblclick', function(eventDblclick) {
+table.addEventListener('dblclick', function(eventDblclick) {
     let td = eventDblclick.target;
     td.contentEditable = 'true';
     td.focus();
@@ -92,34 +98,15 @@ function updateCellValue (eventBlur) {
     let columnName = columnIndex[cellIndex];
 
     tableArray[rowIndex][columnName] = newValue;
-    
+
     td.contentEditable = 'false';
 
     td.removeEventListener('blur', updateCellValue);
 }
 
-// function arrayMoveRow(arr, fromIndex, toIndex) {
-//       while (fromIndex < 0) {
-//           fromIndex += arr.length;
-//       }
-//       while (toIndex < 0) {
-//           toIndex += arr.length;
-//       }
-//       if (toIndex >= arr.length) {
-//           let k = toIndex - arr.length;
-//           while ((k--) + 1) {
-//               arr.push(undefined);
-//           }
-//       }
-//       arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
-//       return arr;
-// }
-
-
 //append delete button to every last cell
 //remove row when button is clicked
 function removeRow (trArray) {
-    let table = document.getElementById('tableBody');
     let btnDelete = document.createElement('input');
     let td = document.createElement('td');
     btnDelete.type = 'button';
@@ -161,8 +148,6 @@ function addRowButton() {
 
 //empty table
 function emptyTable() {
-    let table = document.getElementById('tableBody');
-
     for (let i = 0; i < tableArray.length; i++) {
         table.deleteRow(tableArray[i]);
     }
@@ -211,8 +196,75 @@ function propSort(column, direction) {
     }
 }
 
+/* events fired on the draggable target */
+table.addEventListener("drag", function(event) {
 
+}, false);
 
+table.addEventListener("dragstart", function(event) {
+    // store a ref. on the dragged elem
+    trDragged = event.target;
+    trDragged.setAttribute("id", "draggable");
+    trDragged.classList.remove('dropzone');
 
+    event.dataTransfer.setData("text/plain", null);
+    // make it half transparent
+    event.target.style.opacity = .5;
+}, false);
 
+table.addEventListener("dragend", function(event) {
+    // reset the transparency
+    event.target.style.opacity = "";
+}, false);
+
+/* events fired on the drop targets */
+table.addEventListener("dragover", function(event) {
+    // prevent default to allow drop
+    event.preventDefault();
+}, false);
+
+table.addEventListener("dragenter", function(event) {
+    // highlight potential drop target when the draggable element enters it
+    if (event.target.parentNode.className === "dropzone") {
+        event.target.parentNode.style.background= "purple";
+    }
+}, false);
+
+table.addEventListener("dragleave", function(event) {
+    // reset background of potential drop target when the draggable element leaves it
+    if (event.target.parentNode.className === "dropzone") {
+        event.target.parentNode.style.background = "";
+    }
+}, false);
+
+table.addEventListener("drop", function(event) {
+    // prevent default action (open as link for some elements)
+    event.preventDefault();
+
+    // move dragged elem to the selected drop target
+    if (event.target.className === "dropzone") {
+        event.target.style.background = "";
+
+        event.target.style.background = "";
+        trDragged.parentNode.removeChild(trDragged);
+        event.target.appendChild(trDragged);
+    }
+}, false);
+
+// function arrayDragDrop(arr, fromIndex, toIndex) {
+//        while (fromIndex < 0) {
+//            fromIndex += arr.length;
+//        }
+//        while (toIndex < 0) {
+//            toIndex += arr.length;
+//        }
+//        if (toIndex >= arr.length) {
+//            let k = toIndex - arr.length;
+//            while ((k--) + 1) {
+//                arr.push(undefined);
+//            }
+//        }
+//        arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
+//        return arr;
+// }
 
