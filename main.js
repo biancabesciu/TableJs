@@ -43,8 +43,11 @@ let columnIndex = [
     "color",
     "gender"
 ];
+// createTable();///asta se executa ACUM!!
+// document.addEventListener('DOMContentLoaded', createTable); ///asta se executa dupa ce se incarca toata pagina (adica asincron, adica dupa ce se executa tot codul care exista in main.js)
 
-let trDragged;
+
+let dragSrcEl = null;
 let table = document.getElementById('tableBody');
 
 function insertRow(rowObj) {
@@ -62,7 +65,15 @@ function insertRow(rowObj) {
 
     //make row draggable
     //give it a class of dropzone
+    newRow.className = "row";
     newRow.draggable = "true";
+
+    newRow.addEventListener('dragstart', handleDragStart, false);
+    newRow.addEventListener('dragenter', handleDragEnter, false);
+    newRow.addEventListener('dragover', handleDragOver, false);
+    newRow.addEventListener('dragleave', handleDragLeave, false);
+    newRow.addEventListener('drop', handleDrop, false);
+    newRow.addEventListener('dragend', handleDragEnd, false);
 
     alternateRowColor(table.children);
     removeRow(table.children);
@@ -71,9 +82,9 @@ function insertRow(rowObj) {
 //alter table row background color
 function alternateRowColor(trArray) {
     if(trArray.length % 2) {
-        trArray[trArray.length - 1].className = 'odd';
+        trArray[trArray.length - 1].classList.add('odd');
     } else {
-        trArray[trArray.length - 1].className = 'even';
+        trArray[trArray.length - 1].classList.add('even');
     }
 }
 
@@ -98,9 +109,7 @@ function updateCellValue (eventBlur) {
     let columnName = columnIndex[cellIndex];
 
     tableArray[rowIndex][columnName] = newValue;
-
     td.contentEditable = 'false';
-
     td.removeEventListener('blur', updateCellValue);
 }
 
@@ -162,7 +171,6 @@ function createTable () {
 
 document.addEventListener('DOMContentLoaded', createTable);
 
-
 //add event listener to header buttons
 //sort array by property object
 let buttons = document.getElementsByTagName('table')[0].getElementsByTagName('input');
@@ -196,75 +204,60 @@ function propSort(column, direction) {
     }
 }
 
-/* events fired on the draggable target */
-table.addEventListener("drag", function(event) {
 
-}, false);
+// events fired on the draggable target
+function handleDragStart(e) {
+    dragSrcEl = this;
 
-table.addEventListener("dragstart", function(event) {
-    // store a ref. on the dragged elem
-    trDragged = event.target;
-    trDragged.setAttribute("id", "draggable");
-    trDragged.classList.remove('dropzone');
+    console.log('dragStart');
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/html', this.innerHTML);
+    dragSrcEl.style.background ='slateblue';
+}
 
-    event.dataTransfer.setData("text/plain", null);
-    // make it half transparent
-    event.target.style.opacity = .5;
-}, false);
-
-table.addEventListener("dragend", function(event) {
-    // reset the transparency
-    event.target.style.opacity = "";
-}, false);
-
-/* events fired on the drop targets */
-table.addEventListener("dragover", function(event) {
-    // prevent default to allow drop
-    event.preventDefault();
-}, false);
-
-table.addEventListener("dragenter", function(event) {
-    // highlight potential drop target when the draggable element enters it
-    if (event.target.parentNode.className === "dropzone") {
-        event.target.parentNode.style.background= "purple";
+function handleDragOver(e) {
+    if (e.preventDefault) {
+        e.preventDefault(); // Necessary. Allows us to drop.
     }
-}, false);
 
-table.addEventListener("dragleave", function(event) {
-    // reset background of potential drop target when the draggable element leaves it
-    if (event.target.parentNode.className === "dropzone") {
-        event.target.parentNode.style.background = "";
+    e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+
+    return false;
+}
+
+function handleDragEnter() {
+    // this / e.target is the current hover target.
+    this.classList.add('over');
+}
+
+function handleDragLeave() {
+    this.classList.remove('over');  // this / e.target is previous target element.
+}
+
+function handleDrop(e) {
+    // this / e.target is current target element.
+
+    if (e.stopPropagation) {
+        e.stopPropagation(); // stops the browser from redirecting.
     }
-}, false);
 
-table.addEventListener("drop", function(event) {
-    // prevent default action (open as link for some elements)
-    event.preventDefault();
-
-    // move dragged elem to the selected drop target
-    if (event.target.className === "dropzone") {
-        event.target.style.background = "";
-
-        event.target.style.background = "";
-        trDragged.parentNode.removeChild(trDragged);
-        event.target.appendChild(trDragged);
+    // Don't do anything if dropping the same row we're dragging.
+    if (dragSrcEl !== this) {
+        // Set the source row's HTML to the HTML of the row we dropped on.
+        dragSrcEl.innerHTML = this.innerHTML;
     }
-}, false);
 
-// function arrayDragDrop(arr, fromIndex, toIndex) {
-//        while (fromIndex < 0) {
-//            fromIndex += arr.length;
-//        }
-//        while (toIndex < 0) {
-//            toIndex += arr.length;
-//        }
-//        if (toIndex >= arr.length) {
-//            let k = toIndex - arr.length;
-//            while ((k--) + 1) {
-//                arr.push(undefined);
-//            }
-//        }
-//        arr.splice(toIndex, 0, arr.splice(fromIndex, 1)[0]);
-//        return arr;
-// }
+    this.innerHTML = e.dataTransfer.getData('text/html');
+    dragSrcEl.style.background = '';
+
+    return false;
+}
+
+function handleDragEnd() {
+    // this/e.target is the source node.
+
+    [].forEach.call(table.children, function (row) {
+        row.classList.remove('over');
+    });
+}
 

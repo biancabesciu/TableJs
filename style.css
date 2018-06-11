@@ -1,9 +1,20 @@
+[draggable] {
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    /* Required to make elements draggable in old WebKit */
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+}
+
 body {
     background-color: #a7cbd5;
 }
 
 table {
     border: 1px solid grey;
+    background: grey;
     width: 50%;
     margin: 0 auto;
 }
@@ -18,18 +29,19 @@ table {
 
 tr {
     line-height: 30px;
+    cursor: move;
 }
 
 .odd {
-    background-color: #ffff;
+    background: #ffff;
 }
 
 .even {
-    background-color: #f0f0f0;
+    background: #f0f0f0;
 }
 
 thead {
-    background-color: #362c36;
+    background: #362c36;
     color: white;
 }
 
@@ -94,3 +106,15 @@ td .btnDelete {
     float: right;
 }
 
+/*.dropzone {*/
+    /*width: 200px;*/
+    /*height: 20px;*/
+    /*margin-bottom: 10px;*/
+    /*padding: 10px;*/
+    /*background: cornflowerblue;*/
+/*}*/
+
+.row .over {
+    border: 2px dashed #000;
+    opacity: 0.4;
+}
