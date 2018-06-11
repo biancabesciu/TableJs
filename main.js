@@ -209,7 +209,6 @@ function propSort(column, direction) {
 function handleDragStart(e) {
     dragSrcEl = this;
 
-    console.log('dragStart');
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', this.innerHTML);
     dragSrcEl.style.background ='slateblue';
@@ -218,6 +217,12 @@ function handleDragStart(e) {
 function handleDragOver(e) {
     if (e.preventDefault) {
         e.preventDefault(); // Necessary. Allows us to drop.
+    }
+
+    // Don't do anything if dropping the same row we're dragging.
+    if (dragSrcEl !== this) {
+        // Set the source row's HTML to the HTML of the row we dropped on.
+        dragSrcEl.innerHTML = this.innerHTML;
     }
 
     e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
