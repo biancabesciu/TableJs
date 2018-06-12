@@ -115,8 +115,7 @@ function updateCellValue (eventBlur) {
 
 //append delete button to every last cell
 //remove row when button is clicked
-function removeRow () {
-    let trArray = document.getElementById('tableBody').children;
+function removeRow (trArray) {
     let btnDelete = document.createElement('input');
     let td = document.createElement('td');
     btnDelete.type = 'button';
