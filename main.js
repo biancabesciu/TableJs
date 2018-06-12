@@ -115,7 +115,8 @@ function updateCellValue (eventBlur) {
 
 //append delete button to every last cell
 //remove row when button is clicked
-function removeRow (trArray) {
+function removeRow () {
+    let trArray = document.getElementById('tableBody').children;
     let btnDelete = document.createElement('input');
     let td = document.createElement('td');
     btnDelete.type = 'button';
@@ -211,7 +212,7 @@ function handleDragStart(e) {
 
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', this.innerHTML);
-    dragSrcEl.style.background ='slateblue';
+    dragSrcEl.style.background = '#c3d1dd';
 }
 
 function handleDragOver(e) {
